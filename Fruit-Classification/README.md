@@ -9,7 +9,7 @@ python camera.py
 ```
 This will take a single image, called ```fruit_img.jpg```, that will be saved in your current directory.
 
-# Classify your Image
+## Classify your Image
 The available classifications for this model are: 
 ```
 Apple
