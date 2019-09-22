@@ -11,14 +11,14 @@ This will take a single image, called ```fruit_img.jpg```, that will be saved in
 
 ## Classify your Image
 The available classifications for this model are: 
-```
-Apple
-Beetroot
-Dates
-Mango
-Orange
-Pomegranate
-```
+
+* Apple
+* Beetroot
+* Dates
+* Mango
+* Orange
+* Pomegranate
+
 A database of these images are located in ```Fruit-Classification/fruits-dataset```.
 
 To run the model given, make sure that you  are in the ```Fruit-Classification``` directory. Open the terminal and run the following code:
@@ -36,3 +36,6 @@ pomegranate 0.0026501939
 mango 0.0014653547
 ```
 This indicates that the image has been identified as an apple.
+
+## Acknowledgments
+* [abdullahsadiq on Github](https://github.com/abdullahsadiq/jetson-fruits-classification), who has code on the classification of fruits using Tensorflow on Jetson Nano. This helped build the foundation of this project.
