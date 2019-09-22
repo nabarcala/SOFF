@@ -17,3 +17,6 @@ For this project, the classification is being ran on a Jetson Nano. As long as a
 ```
 ./start.sh
 ```
+
+## Acknowledgments
+* [abdullahsadiq on Github](https://github.com/abdullahsadiq/jetson-fruits-classification), who has code on the classification of fruits using Tensorflow on Jetson Nano. This helped build the foundation of this project.
