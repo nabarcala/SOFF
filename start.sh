@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd soff/ 
+cd Fruit-Classification/ 
 
 python camera.py
 
