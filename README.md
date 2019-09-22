@@ -11,3 +11,9 @@ Jorge Mayora
 
 ## Advisor 
 Hari Kalva
+
+## Running the Classification
+For this project, the classification is being ran on a Jetson Nano. As long as a camera is attached and ready, then the following code can be ran to take a single picture and classify the picture using a retrained network. Keep in mind the available model is based on images of fruit.
+```
+./start.sh
+```
