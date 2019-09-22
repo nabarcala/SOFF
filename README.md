@@ -1,4 +1,4 @@
-# SOFF
+# SOFF - Slices Only Fresh Fruit
 Senior engineering design team project for the SOFF (Slices Only Fresh Fruit) device
 
 ## Project Summary:
