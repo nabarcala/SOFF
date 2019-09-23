@@ -20,3 +20,4 @@ For this project, the classification is being ran on a Jetson Nano. As long as a
 
 ## Acknowledgments
 * [abdullahsadiq on Github](https://github.com/abdullahsadiq/jetson-fruits-classification), who has code on the classification of fruits using Tensorflow on Jetson Nano. This helped build the foundation of this project.
+* [dusty-nv on Github with the Hello AI World module](https://github.com/dusty-nv/jetson-inference) with steps to help familiarize ourselves with machine learning and inference with TensorRT.
