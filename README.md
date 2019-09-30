@@ -22,6 +22,7 @@ For this project, the classification is being ran on a Jetson Nano. As long as a
 Several links are included below that will be helpful as we continue to develop this project.
 * Bluetooth:
 https://www.raspberrypi.org/forums/viewtopic.php?t=133263
+https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/installation
 
 * GPIO:
 https://www.jetsonhacks.com/2019/06/07/jetson-nano-gpio/
