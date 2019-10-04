@@ -76,13 +76,14 @@ Note: These change may not stick when the Jetson Nano reboots. In that case, the
 
 ## Interesting Links
 Several links are included below that will be helpful as we continue to develop this project.
-* Bluetooth:
-https://www.raspberrypi.org/forums/viewtopic.php?t=133263
-https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/installation
-https://circuitdigest.com/microcontroller-projects/controlling-raspberry-pi-gpio-using-android-app-over-bluetooth
 
-* GPIO:
-https://www.jetsonhacks.com/2019/06/07/jetson-nano-gpio/
+Bluetooth:
+* https://www.raspberrypi.org/forums/viewtopic.php?t=133263
+* https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/installation
+* https://circuitdigest.com/microcontroller-projects/controlling-raspberry-pi-gpio-using-android-app-over-bluetooth
+
+GPIO:
+* https://www.jetsonhacks.com/2019/06/07/jetson-nano-gpio/
 
 ## Acknowledgments
 * [abdullahsadiq on Github](https://github.com/abdullahsadiq/jetson-fruits-classification), who has code on the classification of fruits using Tensorflow on Jetson Nano. This helped build the foundation of this project.
