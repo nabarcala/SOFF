@@ -47,19 +47,24 @@ Status check
 ```
 $ /etc/init.d/bluetooth status
 ```
-Run bluetooth in compatibility mode(don't forget ampersand,otherwise prompt won't turn up )
+Run bluetooth in compatibility mode (don't forget ampersand, otherwise prompt won't turn up)
 ```
 $ /usr/lib/bluetooth/bluetoothd --compat&
 ```
 start bluetooth again
 ```
-$ /etc/init.d/bluetooth start
+$ sudo /etc/init.d/bluetooth start
 ```
 again try sdpbrowse
 ```
 $ sdptool browse local
 ```
-Things should work for you now. [Also, this forum has a step-by-step solution in case the error is different.](https://bbs.archlinux.org/viewtopic.php?id=204079) has some steps that corrected the error. 
+and change the permissions 
+```
+$ sudo chmod 777 /var/run/sdp
+```
+
+Things should work now. [Also, this forum has a step-by-step solution in case the error is different.](https://bbs.archlinux.org/viewtopic.php?id=204079) has some steps that corrected the error. 
 
 ## Interesting Links
 Several links are included below that will be helpful as we continue to develop this project.
