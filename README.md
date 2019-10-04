@@ -17,8 +17,8 @@ For this project, the classification is being ran on a Jetson Nano. As long as a
 
 (Linux: set the script with executable permission by running chmod command)
 ```
-chmod +x start.sh
-./start.sh
+$ chmod +x start.sh
+$ ./start.sh
 ```
 
 ## Possible Errors
@@ -37,7 +37,29 @@ However, if running ```sdptool browse local``` has the following output:
 ```
 Failed to connect to SDP server on FF:FF:FF:00:00:00: No such file or directory
 ```
-[Then this forum will have a better step-by-step solution.](https://bbs.archlinux.org/viewtopic.php?id=204079) has some steps that corrected the error. 
+Here are some steps to fixing this error:
+
+Stop bluetooth first
+```
+$ /etc/init.d/bluetooth stop
+```
+Status check
+```
+$ /etc/init.d/bluetooth status
+```
+Run bluetooth in compatibility mode(don't forget ampersand,otherwise prompt won't turn up )
+```
+$ /usr/lib/bluetooth/bluetoothd --compat&
+```
+start bluetooth again
+```
+$ /etc/init.d/bluetooth start
+```
+again try sdpbrowse
+```
+$ sdptool browse local
+```
+Things should work for you now. [Also, this forum has a step-by-step solution in case the error is different.](https://bbs.archlinux.org/viewtopic.php?id=204079) has some steps that corrected the error. 
 
 ## Interesting Links
 Several links are included below that will be helpful as we continue to develop this project.
