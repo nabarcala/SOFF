@@ -20,6 +20,12 @@ For this project, the classification is being ran on a Jetson Nano. As long as a
 $ chmod +x start.sh
 $ ./start.sh
 ```
+## Connecting to the App via Bluetooth
+As of right now, we are testing on connecting the Jetson Nano with an Android app via Bluetooth in order to send data back and forth. The file ```test.py``` is used to connect the two devices. To run this file, use Python 2.
+```
+$ python test.py
+```
+If there are permission issues with ```/usr/lib/python2.7/dist-packages/bluetooth/bluez.py```, run the file with ```sudo```.
 
 ## Possible Errors
 Because of deprecated modules on BlueZ5, this error similar to the one showed below might appear:
@@ -66,11 +72,14 @@ $ sudo chmod 777 /var/run/sdp
 
 Things should work now. [Also, this forum has a step-by-step solution in case the error is different.](https://bbs.archlinux.org/viewtopic.php?id=204079) has some steps that corrected the error. 
 
+Note: These change may not stick when the Jetson Nano reboots. In that case, these commands will have to be run everytime it powers up again.
+
 ## Interesting Links
 Several links are included below that will be helpful as we continue to develop this project.
 * Bluetooth:
 https://www.raspberrypi.org/forums/viewtopic.php?t=133263
 https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/installation
+https://circuitdigest.com/microcontroller-projects/controlling-raspberry-pi-gpio-using-android-app-over-bluetooth
 
 * GPIO:
 https://www.jetsonhacks.com/2019/06/07/jetson-nano-gpio/
@@ -78,3 +87,4 @@ https://www.jetsonhacks.com/2019/06/07/jetson-nano-gpio/
 ## Acknowledgments
 * [abdullahsadiq on Github](https://github.com/abdullahsadiq/jetson-fruits-classification), who has code on the classification of fruits using Tensorflow on Jetson Nano. This helped build the foundation of this project.
 * [dusty-nv on Github with the Hello AI World module](https://github.com/dusty-nv/jetson-inference) with steps to help familiarize ourselves with machine learning and inference with TensorRT. As stated in the README: "The inference portion of Hello AI World - which includes coding your own image classification application for C++ or Python, object detection, and live camera demos - can be run on your Jetson in roughly two hours or less, while transfer learning is best left to leave running overnight."
+* [Controlling Raspberry Pi GPIO using Android App over Bluetooth](https://circuitdigest.com/microcontroller-projects/controlling-raspberry-pi-gpio-using-android-app-over-bluetooth) has some basics on connecting to devices via Bluetooth using the terminal. It also has example code to connect to a bluetooth device.
