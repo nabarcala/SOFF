@@ -17,9 +17,27 @@ For this project, the classification is being ran on a Jetson Nano. As long as a
 
 (Linux: set the script with executable permission by running chmod command)
 ```
-$ chmod +x start.sh
-$ ./start.sh
+chmod +x start.sh
+./start.sh
 ```
+
+## Possible Errors
+Because of deprecated modules on BlueZ5, this error similar to the one showed below might appear:
+```
+Traceback (most recent call last):
+  File "test.py", line 7, in <module>
+    advertise_service(server_sock, "SampleServer",service_classes=[SERIAL_PORT_CLASS], profiles=[SERIAL_PORT_PROFILE])
+  File "/usr/lib/python2.7/dist-packages/bluetooth/bluez.py", line 176, in advertise_service 
+    raise BluetoothError (str (e)) 
+  bluetooth.btcommon.BluetoothError: (2, 'No such file or directory')
+```
+After some research, this error was because of the sdptool. Running the Bluetooth daemon in compatibility mode should fix that error. [This solution can fix this error.](https://raspberrypi.stackexchange.com/questions/41776/failed-to-connect-to-sdp-server-on-ffffff000000-no-such-file-or-directory/42262) 
+
+However, if running ```sdptool browse local``` has the following output:
+```
+Failed to connect to SDP server on FF:FF:FF:00:00:00: No such file or directory
+```
+[Then this forum will have a better step-by-step solution.](https://bbs.archlinux.org/viewtopic.php?id=204079) has some steps that corrected the error. 
 
 ## Interesting Links
 Several links are included below that will be helpful as we continue to develop this project.
