@@ -55,7 +55,7 @@ $ /etc/init.d/bluetooth status
 ```
 Run bluetooth in compatibility mode (don't forget ampersand, otherwise prompt won't turn up)
 ```
-$ /usr/lib/bluetooth/bluetoothd --compat&
+$ sudo /usr/lib/bluetooth/bluetoothd --compat&
 ```
 start bluetooth again
 ```
