@@ -74,6 +74,8 @@ Things should work now. [Also, this forum has a step-by-step solution in case th
 
 Note: These change may not stick when the Jetson Nano reboots. In that case, these commands will have to be run everytime it powers up again.
 
+More details at the [Communications README](Communication/README.md).
+
 ## Interesting Links
 Several links are included below that will be helpful as we continue to develop this project.
 
