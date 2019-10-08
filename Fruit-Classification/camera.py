@@ -29,28 +29,15 @@ def show_camera():
     cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
 
     if cap.isOpened():
-        window_handle = cv2.namedWindow('CSI Camera', cv2.WINDOW_AUTOSIZE)
-        # Window 
-
+	# allow time for flash
         time.sleep(5)
         ret_val, img = cap.read();
         cv2.imwrite('fruit_img.jpg', img)
+ 
+	# resize image
+	#resized = cv2.resize(img, (500, 500))
+    	#cv2.imwrite('fruit_img.jpg', img)
 
-
-        #while cv2.getWindowProperty('CSI Camera',0) >= 0:
-           # ret_val, img = cap.read();
-            #cv2.imshow('CSI Camera',img)
-            # Save Image 
-            #resized = cv2.resize(img, (500, 500))
-            #cv2.imwrite('fruit_img.jpg', img)
-	    # This also acts as 
-            #keyCode = cv2.waitKey(30) & 0xff
-
-            # Stop the program on the ESC key
-           # if keyCode == 27:
-              # break
-
-        #cv2.imwrite('fruit_img.jpg', img)
         cap.release()
         cv2.destroyAllWindows()
     else:
