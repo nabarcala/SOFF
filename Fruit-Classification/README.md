@@ -3,7 +3,7 @@ This project's code was created and tested for the NVIDIA Jetson Nano.
 The model that is used to classify the image of the fruit was retrained using the official Tensorflow tutorial for retraining. It can be found [at their official Tensorflow website](https://github.com/nabarcala/SOFF.git).
 
 ## Capture an Image
-The first step is to have an image ready for the model to classify. This project is using a Raspberry Pi camera connected to the Jetson Nano. Ensure that your camera is corrected connected to your device. Assuming your current directory is ```Fruit-Classification```, run the following code:
+The first step is to have an image ready for the model to classify. This project is using a Raspberry Pi camera connected to the Jetson Nano. Ensure that your camera is corrected connected to your device. Assuming your current directory is ```Fruit-Classification/Image-Classification```, run the following code:
 ```
 python camera.py
 ```
@@ -21,10 +21,10 @@ The available classifications for this model are:
 
 A database of these images are located in ```Fruit-Classification/fruits-dataset```.
 
-To run the model given, make sure that you  are in the ```Fruit-Classification``` directory. Open the terminal and run the following code:
+To run the model given, make sure that you  are in the ```Fruit-Classification/Image-Classification``` directory. Open the terminal and run the following code:
 
 ```
-python3 Image-Classification/label_image.py --graph=Image-Classification/output_graph.pb --labels=Image-Classification/output_labels.txt --input_layer=Placeholder --output_layer=final_result --image=fruit_img.jpg
+python3 label_image.py --graph=output_graph.pb --labels=output_labels.txt --input_layer=Placeholder --output_layer=final_result --image=fruit_img.jpg
 ```
 
 After the model has run, you should see output like this:
