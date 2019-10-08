@@ -72,7 +72,8 @@ def load_labels(label_file):
   return label
 
 
-def runmain():
+if __name__ == "__main__":
+  # Defaults
   file_name = "tensorflow/examples/label_image/data/grace_hopper.jpg"
   model_file = \
     "tensorflow/examples/label_image/data/inception_v3_2016_08_28_frozen.pb"
@@ -84,6 +85,7 @@ def runmain():
   input_layer = "input"
   output_layer = "InceptionV3/Predictions/Reshape_1"
 
+  # Argument Parser
   parser = argparse.ArgumentParser()
   parser.add_argument("--image", help="image to be processed")
   parser.add_argument("--graph", help="graph/model to be executed")
@@ -128,12 +130,19 @@ def runmain():
   input_operation = graph.get_operation_by_name(input_name)
   output_operation = graph.get_operation_by_name(output_name)
 
+  # Get results based on all the labels
   with tf.Session(graph=graph) as sess:
     results = sess.run(output_operation.outputs[0], {
         input_operation.outputs[0]: t
     })
+  # Result values saved here to be printed later
   results = np.squeeze(results)
 
+  # Top fruit name = label[0]
   top_k = results.argsort()[-5:][::-1]
   labels = load_labels(label_file)
-  return labels[0]
+  # Print all fruit labels and their probabilities
+  for i in top_k:
+    print(labels[i], results[i])
+  file2 = open("Fruit.txt","w+")
+  file2.write(labels[0])
