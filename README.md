@@ -21,6 +21,7 @@ $ chmod +x start.sh
 $ ./start.sh
 ```
 ## Connecting to the App via Bluetooth
+Details at [Communication](Communication/README.md).
 As of right now, we are testing on connecting the Jetson Nano with an Android app via Bluetooth in order to send data back and forth. The file ```test.py``` is used to connect the two devices. To run this file, use Python 2.
 ```
 $ python test.py
