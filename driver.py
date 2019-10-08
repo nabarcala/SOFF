@@ -4,19 +4,22 @@ import base64
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, '/home/nb-jetson/SOFF/Fruit-Classification/Image-Classification')
 import camera
-import label_image2
+import subprocesses
 
 #from .Fruit-Classification import camera
 #from Fruit-Classification.Image-Classification import label_image2
 
 def scan():
-    camera.show_camera()
+    #camera.show_camera()
     #need to add this function to label_image
-    s = label_image.runmain()
+    subprocess.call(['start.sh'])
+    #s = label_image.runmain()
+    file1 = open("Fruit-Classification/Image-Classification/Fruit.txt","w+")
+    s = file1.read
     return(s)
 
 def getimage():
-    image = "Fruit-Classification/fruit_img.jpg"
+    image = "Fruit-Classification/Image-Classification/fruit_img.jpg"
     with open(image,"rb") as image_file:
         image1 = base64.b64encode(image_file.read())
         return (image1)
