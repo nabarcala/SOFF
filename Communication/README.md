@@ -60,3 +60,4 @@ Bluetooth:
 * https://www.raspberrypi.org/forums/viewtopic.php?t=133263
 * https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/installation
 * https://circuitdigest.com/microcontroller-projects/controlling-raspberry-pi-gpio-using-android-app-over-bluetooth
+* [Controlling Raspberry Pi GPIO using Android App over Bluetooth](https://circuitdigest.com/microcontroller-projects/controlling-raspberry-pi-gpio-using-android-app-over-bluetooth) has some basics on connecting to devices via Bluetooth using the terminal. It also has example code to connect to a bluetooth device.
