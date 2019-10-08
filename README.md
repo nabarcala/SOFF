@@ -13,7 +13,7 @@ Jorge Mayora
 Hari Kalva
 
 ## Running the Classification
-For this project, the classification is being ran on a Jetson Nano. As long as a camera is attached and ready, then the following code can be ran to take a single picture and classify the picture using a retrained network. Keep in mind the available model is based on images of fruit. More details on this available [here](https://github.com/nabarcala/SOFF/blob/master/Fruit-Classification/README.md).
+For this project, the classification is being ran on a Jetson Nano. As long as a camera is attached and ready, then the following code can be ran to take a single picture and classify the picture using a retrained network. Keep in mind the available model is based on images of fruit. More details on this available at [Fruit-Classification](Fruit-Classification/README.md).
 
 (Linux: set the script with executable permission by running chmod command)
 ```
