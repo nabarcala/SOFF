@@ -8,7 +8,7 @@ def scan():
     s = label_image.runmain()
     return(s)
 def getimage():
-    image = "../Fruit-Classification/fruit_img.jpg"
+    image = "Fruit-Classification/fruit_img.jpg"
     with open(image,"rb") as image_file:
         image1 = base64.b64encode(image_file.read())
         return (image1)
