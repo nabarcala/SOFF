@@ -68,7 +68,12 @@ while True:
 
            #sends the image
            print("Sending image to App.....")
-           client_sock.send(image)
+           #client_sock.send(image)
+
+	   # Test later
+	   #client_sock.put("Fruit-Classification/Image-Classification/fruit_img.jpg")
+	   #subprocess32.call(["ussp-push", "client_info[0]", "Fruit-Classification/Image-Classification/fruit_img.jpg", "fruit_img.jpg"])
+
 	   print("Sent image to App")
         
         #if app sends "cut1"
