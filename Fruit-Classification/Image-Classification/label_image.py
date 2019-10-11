@@ -141,8 +141,14 @@ if __name__ == "__main__":
   # Top fruit name = label[0]
   top_k = results.argsort()[-5:][::-1]
   labels = load_labels(label_file)
+
   # Print all fruit labels and their probabilities
   for i in top_k:
-    print(labels[i], results[i])
+    print(i, labels[i], results[i])
+    break
 
-# End
+  file1 = open("Fruit.txt","w+")
+  file1.write(labels[i])
+  file1.close()
+
+
