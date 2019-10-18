@@ -78,7 +78,7 @@ Note: These change may not stick when the Jetson Nano reboots. In that case, the
 More details at the [Communication's README](Communication/README.md).
 
 
-##Color Sensor Section
+## Color Sensor Section
 Adafruit installation packages for linux:
 https://circuitpython.readthedocs.io/projects/as726x/en/latest/
 
