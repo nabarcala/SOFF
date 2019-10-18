@@ -77,6 +77,11 @@ Note: These change may not stick when the Jetson Nano reboots. In that case, the
 
 More details at the [Communication's README](Communication/README.md).
 
+
+## Color Sensor Section
+Adafruit installation packages for linux:
+https://circuitpython.readthedocs.io/projects/as726x/en/latest/
+
 ## Interesting Links
 Several links are included below that will be helpful as we continue to develop this project.
 
