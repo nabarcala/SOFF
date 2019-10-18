@@ -19,12 +19,12 @@ while True:
  
     #plot plot the data
     print("\n")
-    print("V: " + sensor.violet)
-    print("B: " + sensor.blue)
-    print("G: " + sensor.green)
-    print("Y: " + sensor.yellow)
-    print("O: " + sensor.orange)
-    print("R: " + sensor.red)
+    print("V: " + str(sensor.violet))
+    print("B: " + str(sensor.blue))
+    print("G: " + str(sensor.green))
+    print("Y: " + str(sensor.yellow))
+    print("O: " + str(sensor.orange))
+    print("R: " + str(sensor.red))
     
  
     time.sleep(1)
