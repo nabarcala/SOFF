@@ -83,6 +83,8 @@ Adafruit installation packages for linux:
 https://circuitpython.readthedocs.io/projects/as726x/en/latest/
 ## Instructions to connect Arduino nano with Jetson Nano
 http://blog.rareschool.com/2019/05/five-steps-to-connect-jetson-nano-and.html
+## Connecting color sensor to Jetson
+https://learn.adafruit.com/adafruit-as7262-6-channel-visible-light-sensor/circuitpython-wiring-test
 
 ## Interesting Links
 Several links are included below that will be helpful as we continue to develop this project.
