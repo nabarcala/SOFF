@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="screen_background">#101515</color>
+    <color name="slice_button_background">#FFEE58</color>
+    <color name="cuts_spinner_background">#FFEE58</color>
+    <color name="info_textview_background">#FFEE58</color>
+    <color name="settings_button_background">#3D6ACD</color>
+    <color name="settings_background">#FFEE58</color>
+</resources>
