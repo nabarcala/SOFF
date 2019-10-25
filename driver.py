@@ -64,7 +64,9 @@ while True:
 
            #sends the fruit Classification
            print("Sending fruit result.....")
+	   client_sock.send("Image")
            client_sock.send(result)
+	   client_sock.send("end")
 
            #sends the image
            print("Sending image to App.....")
