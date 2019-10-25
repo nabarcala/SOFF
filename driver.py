@@ -64,13 +64,16 @@ while True:
 
            #sends the fruit Classification
            print("Sending fruit result.....")
-	   client_sock.send("Image")
+	   
            client_sock.send(result)
-	   client_sock.send("end")
+	   
 
            #sends the image
            print("Sending image to App.....")
-           #client_sock.send(image)
+	
+	   client_sock.send("Image")
+           client_sock.send(image)
+	   client_sock.send("end")
 
 	   # Test later
 	   #client_sock.put("Fruit-Classification/Image-Classification/fruit_img.jpg")
