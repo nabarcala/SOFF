@@ -1,4 +1,5 @@
 from bluetooth import *
+import time
 import base64
 
 import subprocess32
@@ -72,6 +73,7 @@ while True:
            print("Sending image to App.....")
 	
 	   client_sock.send("Image")
+	   time.sleep(5)
            client_sock.send(image)
 	   client_sock.send("end")
 
