@@ -15,18 +15,28 @@ Hari Kalva
 ## Running the Classification
 For this project, the classification is being ran on a Jetson Nano. As long as a camera is attached and ready, then the following code can be ran to take a single picture and classify the picture using a retrained network. Keep in mind the available model is based on images of fruit. More details on this available at [Fruit-Classification](Fruit-Classification/README.md).
 
-(Linux: set the script with executable permission by running chmod command)
+Linux: set the script with executable permission by running chmod command. 
 ```
 $ chmod +x start.sh
 $ ./start.sh
 ```
+
+Note: The ```start.sh``` script is called from the driver that is mentioned below.
+
 ## Connecting to the App via Bluetooth
 Details at [Communication](Communication/README.md).
-As of right now, we are testing on connecting the Jetson Nano with an Android app via Bluetooth in order to send data back and forth. The file ```test.py``` is used to connect the two devices. To run this file, use Python 2.
+
+The ```driver.py``` is the driver for this project. This file is designed to begin all the features of the SOFF device.
+
+We can connect the Jetson Nano to an Android app via Bluetooth. The Jetson recieves commands in the form of strings in order to start the classification, take a picture of a fruit, check the ripeness, and/or slice a fruit.
+
+The file ```driver.py``` is used to connect the two devices. To run this file, use Python 2.
 ```
-$ python test.py
+$ sudo python driver.py
 ```
-If there are permission issues with ```/usr/lib/python2.7/dist-packages/bluetooth/bluez.py```, run the file with ```sudo```.
+(If there are permission issues with ```/usr/lib/python2.7/dist-packages/bluetooth/bluez.py```, run the file with ```sudo```.)
+
+We are running this script with sudo to account for permissions that the other features need. E.g. the color sensor needs sudo permissions in order to get the color values to determine ripeness.
 
 ## Possible Errors
 Because of deprecated modules on BlueZ5, this error similar to the one showed below might appear:
@@ -77,10 +87,38 @@ Note: These change may not stick when the Jetson Nano reboots. In that case, the
 
 More details at the [Communication's README](Communication/README.md).
 
+# Running the fix as a script file
+The file ```bt-compat.sh``` contains the commands that fix the error mentioned in the previous section. Because these commands require administrative permission, we are very interested in being able to run this script as root with no password.
+
+[This ask has a step by step solution](https://askubuntu.com/questions/167847/how-to-run-bash-script-as-root-with-no-password). Here is the breakdown:
+
+Make the file owned by root and group root:
+```
+sudo chown root.root bt-compat.sh
+```
+Make it executable for all and writable only by root:
+```
+sudo chmod 4755 bt-compat.sh
+```
+Add these two lines at the end of your sudoers file.
+```
+Cmnd_Alias        CMDS = /path/to/your/script/bt-compat.sh
+
+<username>  ALL=NOPASSWD: CMDS
+```
+This should allow the script to run without asking for a password as long as it is run with a sudo in front.
+```
+sudo bt-compat.sh
+```
 
 ## Color Sensor Section
+Using a color sensor to detect ripeness in fruits that begin to change color, such as avocados and peaches.
+
 Adafruit installation packages for linux:
 https://circuitpython.readthedocs.io/projects/as726x/en/latest/
+
+The file ```colorsensor.py``` takes color values that are valuable in determining ripeness in fruits that begin to change color as they ripen. This file is called from the ```driver.py``` when the command is recieved from the app.
+
 ## Instructions to connect Arduino nano with Jetson Nano
 http://blog.rareschool.com/2019/05/five-steps-to-connect-jetson-nano-and.html
 ## Connecting color sensor to Jetson
