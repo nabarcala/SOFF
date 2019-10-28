@@ -27,6 +27,9 @@ def getimage():
 def cut1():
     print("Cutting Fruit.....")
     
+def checkripe():
+    print("Checking ripeness.....")
+    
 #start Bluetooth stuff
 server_sock = BluetoothSocket( RFCOMM )
 server_sock.bind(("", PORT_ANY))
@@ -86,6 +89,9 @@ while True:
         #if app sends "cut1"
         elif data.decode == "cut1":
             cut1()
+            
+        elif data.decode == "checkripe":
+            checkripe()
              
 #except IOError:
     #pass
