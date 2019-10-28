@@ -82,6 +82,8 @@ Using a color sensor to detect ripeness in fruits that begin to change color, su
 
 Adafruit installation packages for linux:
 https://circuitpython.readthedocs.io/projects/as726x/en/latest/
+## Instructions to connect Arduino nano with Jetson Nano
+http://blog.rareschool.com/2019/05/five-steps-to-connect-jetson-nano-and.html
 
 ## Interesting Links
 Several links are included below that will be helpful as we continue to develop this project.
