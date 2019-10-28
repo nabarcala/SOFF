@@ -90,7 +90,7 @@ More details at the [Communication's README](Communication/README.md).
 # Running the fix as a script file
 The file ```bt-compat.sh``` contains the commands that fix the error mentioned in the previous section. Because these commands require administrative permission, we are very interested in being able to run this script as root with no password.
 
-This ask has a step by step solution: https://askubuntu.com/questions/167847/how-to-run-bash-script-as-root-with-no-password. Here is the breakdown:
+[This ask has a step by step solution](https://askubuntu.com/questions/167847/how-to-run-bash-script-as-root-with-no-password). Here is the breakdown:
 
 Make the file owned by root and group root:
 ```
