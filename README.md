@@ -15,13 +15,19 @@ Hari Kalva
 ## Running the Classification
 For this project, the classification is being ran on a Jetson Nano. As long as a camera is attached and ready, then the following code can be ran to take a single picture and classify the picture using a retrained network. Keep in mind the available model is based on images of fruit. More details on this available at [Fruit-Classification](Fruit-Classification/README.md).
 
-(Linux: set the script with executable permission by running chmod command)
+Linux: set the script with executable permission by running chmod command. 
 ```
 $ chmod +x start.sh
 $ ./start.sh
 ```
+
+Note: The ```start.sh``` script is called from the driver that is mentioned below.
+
 ## Connecting to the App via Bluetooth
 Details at [Communication](Communication/README.md).
+
+The ```driver.py``` is the driver for this project. This file is designed to begin all the features of the SOFF device.
+
 We can connect the Jetson Nano to an Android app via Bluetooth. The Jetson recieves commands in the form of strings in order to start the classification, take a picture of a fruit, check the ripeness, and/or slice a fruit.
 
 The file ```driver.py``` is used to connect the two devices. To run this file, use Python 2.
