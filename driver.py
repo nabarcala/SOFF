@@ -1,7 +1,7 @@
 from bluetooth import *
 import time
 import base64
-
+import os
 import subprocess32
 
 # insert at 1, 0 is the script path (or '' in REPL)
@@ -27,6 +27,11 @@ def getimage():
 def cut1():
     print("Cutting Fruit.....")
     
+def checkripe():
+    print("Checking ripeness.....")
+    # Call the python file. It requires python3 to run
+    os.system('python3 colorsensor.py')
+    
 #start Bluetooth stuff
 server_sock = BluetoothSocket( RFCOMM )
 server_sock.bind(("", PORT_ANY))
@@ -49,43 +54,46 @@ print("Accepted connection from ", client_info)
 
 #try:
 while True:
-        data = client_sock.recv(1024)
-	print("received [%s]" % data.decode("utf-8"))
-        #if app sends "stop" == 0: break
-        if data.decode("utf-8") == "stop":
-            print("Stopping: Breaking conection.....")
-            break
+    data = client_sock.recv(1024)
+    print("received [%s]" % data.decode("utf-8"))
+    #if app sends "stop" == 0: break
+    if data.decode("utf-8") == "stop":
+        print("Stopping: Breaking conection.....")
+        break
 
-        #if app sends "scan"
-        elif data.decode("utf-8") == "scan":
-            #gets the name of the fruit
-           print("Scanning fruit.....") 
-           result = scan()
-           image = getimage()
+    #if app sends "scan"
+    elif data.decode("utf-8") == "scan":
+        #gets the name of the fruit
+        print("Scanning fruit.....") 
+        result = scan()
+        image = getimage()
 
-           #sends the fruit Classification
-           print("Sending fruit result.....")
-	   
-           client_sock.send(result)
-	   
+        #sends the fruit Classification
+        print("Sending fruit result.....")
 
-           #sends the image
-           print("Sending image to App.....")
-	
-	   client_sock.send("Image")
-	   time.sleep(5)
-           client_sock.send(image)
-	   client_sock.send("end")
+        client_sock.send(result)
 
-	   # Test later
-	   #client_sock.put("Fruit-Classification/Image-Classification/fruit_img.jpg")
-	   #subprocess32.call(["ussp-push", "client_info[0]", "Fruit-Classification/Image-Classification/fruit_img.jpg", "fruit_img.jpg"])
 
-	   print("Sent image to App")
-        
-        #if app sends "cut1"
-        elif data.decode == "cut1":
-            cut1()
+        #sends the image
+        print("Sending image to App.....")
+
+        client_sock.send("Image")
+        time.sleep(5)
+        client_sock.send(image)
+        client_sock.send("end")
+
+    # Test later
+    #client_sock.put("Fruit-Classification/Image-Classification/fruit_img.jpg")
+    #subprocess32.call(["ussp-push", "client_info[0]", "Fruit-Classification/Image-Classification/fruit_img.jpg", "fruit_img.jpg"])
+
+        print("Sent image to App")
+
+    #if app sends "cut1"
+    elif data.decode("utf-8") == "cut1":
+        cut1()
+
+    elif data.decode("utf-8") == "checkripe":
+        checkripe()
              
 #except IOError:
     #pass
