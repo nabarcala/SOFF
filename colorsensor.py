@@ -93,7 +93,7 @@ for i in range(count):
     avg_blue = avg_blue + percent_blue[i]
     avg_green = avg_green + percent_green[i]
     avg_yellow = avg_yellow + percent_yellow[i]
-    avg_orange = avg_orange + avg_orange[i]
+    avg_orange = avg_orange + percent_orange[i]
     avg_red = avg_red + percent_red[i]
     
 avg_violet = avg_violet/count
