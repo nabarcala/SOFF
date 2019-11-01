@@ -61,7 +61,7 @@ for i in range(count):
         
     #plot plot the data
     sensor.driver_led = True
-    print("\n")
+    #print("\n")
     #print("V: " + str(sensor.violet))
     #print("B: " + str(sensor.blue))
     #print("G: " + str(sensor.green))
