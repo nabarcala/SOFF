@@ -131,7 +131,16 @@ print(avg_red)
 if avg_green < .30:
     if avg_green < .25:
         print("Average green less than 25%, probably ripe")
+        file2 = open("Ripe.txt","w+")
+        file2.write("Ripe, Ready to eat")
+        file2.close()
     else:
         print("Should probably wait a few more days")
+        file2 = open("Ripe.txt","w+")
+        file2.write("Not Ripe: Wait a few more days")
+        file2.close()
 else:
     print("Average green greater than 30%, should probably wait a few days")
+    file2 = open("Ripe.txt","w+")
+    file2.write("Not Ripe, Still green")
+    file2.close()

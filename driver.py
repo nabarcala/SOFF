@@ -31,6 +31,11 @@ def checkripe():
     print("Checking ripeness.....")
     # Call the python file. It requires python3 to run
     os.system('python3 colorsensor.py')
+    file1 = open("Ripe.txt","r")
+    s = file1.read()
+    file1.close()
+    return(s)
+    
     
 #start Bluetooth stuff
 server_sock = BluetoothSocket( RFCOMM )
@@ -93,7 +98,8 @@ while True:
         cut1()
 
     elif data.decode("utf-8") == "checkripe":
-        checkripe()
+        ripe = checkripe()
+        client.send(ripe)
              
 #except IOError:
     #pass
