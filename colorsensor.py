@@ -68,7 +68,7 @@ for i in range(count):
     #print("Y: " + str(sensor.yellow))
     #print("O: " + str(sensor.orange))
     #print("R: " + str(sensor.red))
-    sensor.driver_led = False
+    
     
     violet.append(sensor.violet)
     blue.append(sensor.blue)
@@ -87,7 +87,7 @@ for i in range(count):
     percent_red.append(red[i]/total)
 
     #time.sleep(1)
-    
+sensor.driver_led = False
 for i in range(count):
     avg_violet = avg_violet + percent_violet[i]
     avg_blue = avg_blue + percent_blue[i]
@@ -103,16 +103,27 @@ avg_yellow = avg_yellow/count
 avg_orange = avg_orange/count
 avg_red = avg_yellow/count
 
-
+print("Violet")
+print("\n")
 print(avg_violet)
+print("\n")
+print("Blue")
 print("\n")
 print(avg_blue)
 print("\n")
+print("Green")
+print("\n")
 print(avg_green)
+print("\n")
+print("Yellow")
 print("\n")
 print(avg_yellow)
 print("\n")
+print("Orange")
+print("\n")
 print(avg_orange)
+print("\n")
+print("Red")
 print("\n")
 print(avg_red)
 
