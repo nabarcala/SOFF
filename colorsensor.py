@@ -12,19 +12,135 @@ sensor = Adafruit_AS726x(i2c)
 
 sensor.conversion_mode = sensor.MODE_2
 
-while True:
+#change coutn to increase number of data points
+count = 20
+
+#stores color data
+violet = []
+blue = []
+green = []
+yellow = []
+orange = []
+red = []
+
+#stores percentage of colord ata
+percent_violet = []
+percent_blue = []
+percent_green = []
+percent_yellow = []
+percent_orange = []
+percent_red= []
+
+#stores averages
+avg_violet = 0.000
+avg_blue = 0.000
+avg_green = 0.000
+avg_yellow = 0.000
+avg_orange = 0.000
+avg_red = 0.000
+
+#blinking lights to indicate the ripeness detector is about to start
+sensor.driver_led = True
+time.sleep(.5)
+sensor.driver_led = False
+time.sleep(.5)
+sensor.driver_led = True
+time.sleep(.5)
+sensor.driver_led = False
+time.sleep(.5)
+sensor.driver_led = True
+time.sleep(.5)
+sensor.driver_led = False
+time.sleep(.5)
+
+#while True:
+for i in range(count):
     # Wait for data to be ready
     while not sensor.data_ready:
         time.sleep(.1)
- 
+        
     #plot plot the data
-    print("\n")
-    print("V: " + sensor.violet)
-    print("B: " + sensor.blue)
-    print("G: " + sensor.green)
-    print("Y: " + sensor.yellow)
-    print("O: " + sensor.orange)
-    print("R: " + sensor.red)
+    sensor.driver_led = True
+    #print("\n")
+    #print("V: " + str(sensor.violet))
+    #print("B: " + str(sensor.blue))
+    #print("G: " + str(sensor.green))
+    #print("Y: " + str(sensor.yellow))
+    #print("O: " + str(sensor.orange))
+    #print("R: " + str(sensor.red))
     
- 
-    time.sleep(1)
+    
+    violet.append(sensor.violet)
+    blue.append(sensor.blue)
+    green.append(sensor.green)
+    yellow.append(sensor.yellow)
+    orange.append(sensor.orange)
+    red.append(sensor.red)
+    
+    total = violet[i]+blue[i]+green[i]+yellow[i]+orange[i]+red[i]
+    
+    percent_violet.append(violet[i]/total)
+    percent_blue.append(blue[i]/total)
+    percent_green.append(green[i]/total)
+    percent_yellow.append(yellow[i]/total)
+    percent_orange.append(orange[i]/total)
+    percent_red.append(red[i]/total)
+
+    #time.sleep(1)
+sensor.driver_led = False
+for i in range(count):
+    avg_violet = avg_violet + percent_violet[i]
+    avg_blue = avg_blue + percent_blue[i]
+    avg_green = avg_green + percent_green[i]
+    avg_yellow = avg_yellow + percent_yellow[i]
+    avg_orange = avg_orange + percent_orange[i]
+    avg_red = avg_red + percent_red[i]
+    
+avg_violet = avg_violet/count
+avg_blue = avg_blue/count
+avg_green = avg_green/count
+avg_yellow = avg_yellow/count
+avg_orange = avg_orange/count
+avg_red = avg_yellow/count
+
+print("Violet")
+print("\n")
+print(avg_violet)
+print("\n")
+print("Blue")
+print("\n")
+print(avg_blue)
+print("\n")
+print("Green")
+print("\n")
+print(avg_green)
+print("\n")
+print("Yellow")
+print("\n")
+print(avg_yellow)
+print("\n")
+print("Orange")
+print("\n")
+print(avg_orange)
+print("\n")
+print("Red")
+print("\n")
+print(avg_red)
+
+#baseline for avocado testing
+if avg_green < .30:
+    if avg_green < .25:
+        print("Average green less than 25%, probably ripe")
+        file2 = open("Ripe.txt","w+")
+        file2.write("Ripe, Ready to eat")
+        file2.close()
+    else:
+        print("Should probably wait a few more days")
+        file2 = open("Ripe.txt","w+")
+        file2.write("Not Ripe: Wait a few more days")
+        file2.close()
+else:
+    print("Average green greater than 30%, should probably wait a few days")
+    file2 = open("Ripe.txt","w+")
+    file2.write("Not Ripe, Still green")
+    file2.close()

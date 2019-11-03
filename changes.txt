@@ -1,0 +1,10 @@
+List of Changes:
+Added a new class and xml file called Fruit_List
+Added some code to Main_Activity to write to text file(new method: save_to_textfile)
+Added a new button to Settings_Activity that opens up Fruit_List
+Image fix changed some code in BluetoothConnectionService
+
+Notes:
+
+-by default whenever "CUT" button is pressed. it stores the the name "Apple" in the textfile no matter what fruit name is sent, this is intentional
+-Couldn't test this out yet due to usb cable problems but these additions should work properly
