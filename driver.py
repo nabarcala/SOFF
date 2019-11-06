@@ -99,7 +99,10 @@ while True:
 
     elif data.decode("utf-8") == "checkripe":
         ripe = checkripe()
+        client_sock.send("Ripeness")
+        time.sleep(5)
         client_sock.send(ripe)
+        client_sock.send("end")
              
 #except IOError:
     #pass
