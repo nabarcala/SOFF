@@ -35,7 +35,13 @@ def checkripe():
     s = file1.read()
     file1.close()
     return(s)
-    
+def checkbanana():
+    print("Checking Banana Ripeness....")
+    os.system('python3 bananasensor.py')
+    file1 = open("Ripe.txt","r")
+    s = file1.read()
+    file1.close()
+    return(s)
     
 #start Bluetooth stuff
 server_sock = BluetoothSocket( RFCOMM )
@@ -56,6 +62,7 @@ print("Waiting for connection on RFCOMM channel %d" % port)
 
 client_sock, client_info = server_sock.accept()
 print("Accepted connection from ", client_info)
+client_sock.send("Connection Established")
 
 #try:
 while True:
@@ -103,7 +110,14 @@ while True:
         time.sleep(5)
         client_sock.send(ripe)
         client_sock.send("end")
-             
+    elif data.decode("utf-8") == "checkbanana":
+        ripe = checkbanana()
+        client_sock.send("Ripeness")
+        time.sleep(5)
+        client_sock.send(ripe)
+        client_sock.sendd("end")
+    elif data.decode("utf-8") == "test":
+        client_sock.send("Bluetooth Device is connected")
 #except IOError:
     #pass
 
