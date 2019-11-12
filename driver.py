@@ -5,8 +5,8 @@ import os
 import subprocess32
 
 # insert at 1, 0 is the script path (or '' in REPL)
-sys.path.insert(1, '/home/nb-jetson/SOFF/Fruit-Classification/Image-Classification')
-import camera
+# sys.path.insert(1, '/home/nb-jetson/SOFF/Fruit-Classification/Image-Classification')
+# import camera
 
 def scan():
     #camera.show_camera()
@@ -50,96 +50,101 @@ def checkbanana():
     file1.close()
     return(s)
     
-#start Bluetooth stuff
-server_sock = BluetoothSocket( RFCOMM )
-server_sock.bind(("", PORT_ANY))
-server_sock.listen(1)
+def btconnection():
+    #start Bluetooth stuff
+    server_sock = BluetoothSocket( RFCOMM )
+    server_sock.bind(("", PORT_ANY))
+    server_sock.listen(1)
 
-port = server_sock.getsockname()[1]
+    port = server_sock.getsockname()[1]
 
-uuid = "00001101-0000-1000-8000-00805F9B34FB"
+    uuid = "00001101-0000-1000-8000-00805F9B34FB"
 
-advertise_service( server_sock, "BTS",
-                   service_id = uuid,
-                   service_classes = [ uuid, SERIAL_PORT_CLASS ],
-                   profiles = [ SERIAL_PORT_PROFILE ], 
-                    )
-                   
-print("Waiting for connection on RFCOMM channel %d" % port)
+    advertise_service( server_sock, "BTS",
+                       service_id = uuid,
+                       service_classes = [ uuid, SERIAL_PORT_CLASS ],
+                       profiles = [ SERIAL_PORT_PROFILE ], 
+                        )
 
-client_sock, client_info = server_sock.accept()
-print("Accepted connection from ", client_info)
-client_sock.send("Connection Established")
+    print("Waiting for connection on RFCOMM channel %d" % port)
 
-#try:
-while True:
-    data = client_sock.recv(1024)
-    print("received [%s]" % data.decode("utf-8"))
-    #if app sends "stop" == 0: break
-    if data.decode("utf-8") == "stop":
-        print("Stopping: Breaking conection.....")
-        break
+    client_sock, client_info = server_sock.accept()
+    print("Accepted connection from ", client_info)
+    client_sock.send("Connection Established")
 
-    #if app sends "scan"
-    elif data.decode("utf-8") == "scan":
-        #gets the name of the fruit
-        print("Scanning fruit.....") 
-        result = scan()
-        image = getimage()
+    #try:
+    while True:
+        data = client_sock.recv(1024)
+        print("received [%s]" % data.decode("utf-8"))
+        #if app sends "stop" == 0: break
+        if data.decode("utf-8") == "stop":
+            print("Stopping: Breaking conection.....")
+            break
 
-        #sends the fruit Classification
-        print("Sending fruit result.....")
+        #if app sends "scan"
+        elif data.decode("utf-8") == "scan":
+            #gets the name of the fruit
+            print("Scanning fruit.....") 
+            result = scan()
+            image = getimage()
 
-        client_sock.send(result)
+            #sends the fruit Classification
+            print("Sending fruit result.....")
+            client_sock.send(result)
 
+            #sends the image
+            print("Sending image to App.....")
+            client_sock.send("Image")
+            time.sleep(5)
+            client_sock.send(image)
+            client_sock.send("end")
 
-        #sends the image
-        print("Sending image to App.....")
+        # Test later
+        #client_sock.put("Fruit-Classification/Image-Classification/fruit_img.jpg")
+        #subprocess32.call(["ussp-push", "client_info[0]", "Fruit-Classification/Image-Classification/fruit_img.jpg", "fruit_img.jpg"])
 
-        client_sock.send("Image")
-        time.sleep(5)
-        client_sock.send(image)
-        client_sock.send("end")
+            print("Sent image to App")
 
-    # Test later
-    #client_sock.put("Fruit-Classification/Image-Classification/fruit_img.jpg")
-    #subprocess32.call(["ussp-push", "client_info[0]", "Fruit-Classification/Image-Classification/fruit_img.jpg", "fruit_img.jpg"])
+        #if app sends "cut1", cut downwards
+        elif data.decode("utf-8") == "cut1":
+            cut1()
+            # Send confirmation and tell user to remove fruit
+            client_sock.send("Sliced")
 
-        print("Sent image to App")
+        # if app send "reset", move upwards
+        elif data.decode("utf-8") == "reset":
+            reset_mechanism()
+            # tell user that the cutting mechanism is done moving
+            client_sock.send("Reset")
 
-    #if app sends "cut1", cut downwards
-    elif data.decode("utf-8") == "cut1":
-        cut1()
-        # Send confirmation and tell user to remove fruit
-        client_sock.send("Sliced")
-        
-    # if app send "reset", move upwards
-    elif data.decode("utf-8") == "reset":
-        reset_mechanism()
-        # tell user that the cutting mechanism is done moving
-        client_sock.send("Reset")
+        elif data.decode("utf-8") == "checkripe":
+            ripe = checkripe()
+            client_sock.send("Ripeness")
+            time.sleep(5)
+            client_sock.send(ripe)
+            client_sock.send("end")
 
-    elif data.decode("utf-8") == "checkripe":
-        ripe = checkripe()
-        client_sock.send("Ripeness")
-        time.sleep(5)
-        client_sock.send(ripe)
-        client_sock.send("end")
-        
-    elif data.decode("utf-8") == "checkbanana":
-        ripe = checkbanana()
-        client_sock.send("Ripeness")
-        time.sleep(5)
-        client_sock.send(ripe)
-        client_sock.sendd("end")
-        
-    elif data.decode("utf-8") == "test":
-        client_sock.send("Bluetooth Device is connected")
-#except IOError:
-    #pass
+        elif data.decode("utf-8") == "checkbanana":
+            ripe = checkbanana()
+            client_sock.send("Ripeness")
+            time.sleep(5)
+            client_sock.send(ripe)
+            client_sock.sendd("end")
 
-print("Disconnected")
+        elif data.decode("utf-8") == "test":
+            client_sock.send("Bluetooth Device is connected")
+    #except IOError:
+        #pass
 
-client_sock.close()
-server_sock.close()
-print("All Closed")
+    print("Disconnected")
+
+    client_sock.close()
+    server_sock.close()
+    print("All Closed")
+    
+    # restart bluetooth connection if disconnected
+    btconnection()
+    
+if __name__=='__main__':
+    btconnection()
+# End of script
