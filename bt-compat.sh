@@ -21,4 +21,5 @@ sudo /etc/init.d/bluetooth start
 # and change the permissions
 sudo chmod 777 /var/run/sdp
 
+cd SOFF/
 
