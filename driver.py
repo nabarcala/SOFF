@@ -26,6 +26,12 @@ def getimage():
 
 def cut1():
     print("Cutting Fruit.....")
+    # Call the cutting program.
+    os.system('sudo python3 ser.py --dir D')
+ 
+def reset_mechanism():
+    print("Resetting mechanism.....")
+    os.system('sudo python3 ser.py --dir U')
     
 def checkripe():
     print("Checking ripeness.....")
@@ -35,6 +41,7 @@ def checkripe():
     s = file1.read()
     file1.close()
     return(s)
+
 def checkbanana():
     print("Checking Banana Ripeness....")
     os.system('python3 bananasensor.py')
@@ -100,9 +107,17 @@ while True:
 
         print("Sent image to App")
 
-    #if app sends "cut1"
+    #if app sends "cut1", cut downwards
     elif data.decode("utf-8") == "cut1":
         cut1()
+        # Send confirmation and tell user to remove fruit
+        client_sock.send("Sliced")
+        
+    # if app send "reset", move upwards
+    elif data.decode("utf-8") == "reset":
+        reset_mechanism()
+        # tell user that the cutting mechanism is done moving
+        client_sock.send("Reset")
 
     elif data.decode("utf-8") == "checkripe":
         ripe = checkripe()
@@ -110,12 +125,14 @@ while True:
         time.sleep(5)
         client_sock.send(ripe)
         client_sock.send("end")
+        
     elif data.decode("utf-8") == "checkbanana":
         ripe = checkbanana()
         client_sock.send("Ripeness")
         time.sleep(5)
         client_sock.send(ripe)
         client_sock.sendd("end")
+        
     elif data.decode("utf-8") == "test":
         client_sock.send("Bluetooth Device is connected")
 #except IOError:
