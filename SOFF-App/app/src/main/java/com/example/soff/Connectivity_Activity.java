@@ -26,6 +26,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -38,14 +39,11 @@ public class Connectivity_Activity extends AppCompatActivity implements AdapterV
     Button btnEnableDisable_Discoverable;
     Button btnStartConnection;
     Button btnSend;
-    Switch switchEnableDisable_Discoverable;
 
     TextView incomingMessages;
     StringBuilder messages;
 
     EditText etSend;
-
-    Boolean switchState;
 
     private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -76,8 +74,34 @@ public class Connectivity_Activity extends AppCompatActivity implements AdapterV
                     case BluetoothAdapter.STATE_TURNING_ON:
                         Log.d(TAG,"onReceive: STATE TURNING ON");
                         break;
+                    case BluetoothAdapter.STATE_CONNECTED:
+                        Log.d(TAG,"onReceive: Connected ON");
+                        break;
 
                 }
+            }
+            else if(action.equals(mBluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED))
+            {
+                Log.d(TAG, "Connection state change");
+                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE,mBluetoothAdapter.ERROR);
+                switch(state){
+                    case BluetoothAdapter.STATE_CONNECTING:
+                        Log.d(TAG, "mBroadCastReceiver2: Connecting");
+                        break;
+                    case BluetoothAdapter.STATE_CONNECTED:
+                        Log.d(TAG, "mBroadCastReceiver2: Connected");
+                        Context context1 = getApplicationContext();
+                        CharSequence text = "Device Connected";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context1, text, duration);
+                        toast.show();
+                        break;
+                    case BluetoothAdapter.STATE_DISCONNECTING:
+                        Log.d(TAG, "mBroadCastReceiver2: Disconnecting");
+                        break;
+                }
+
             }
         }
 
@@ -101,12 +125,7 @@ public class Connectivity_Activity extends AppCompatActivity implements AdapterV
                     case BluetoothAdapter.SCAN_MODE_NONE:
                         Log.d(TAG, "mBroadCastReceiver2: Discoverability disabled. Not able to receive connections");
                         break;
-                    case BluetoothAdapter.STATE_CONNECTING:
-                        Log.d(TAG, "mBroadCastReceiver2: Connecting");
-                        break;
-                    case BluetoothAdapter.STATE_CONNECTED:
-                        Log.d(TAG, "mBroadCastReceiver2: Connected");
-                        break;
+
                 }
             }
         }
@@ -119,9 +138,14 @@ public class Connectivity_Activity extends AppCompatActivity implements AdapterV
             Log.d(TAG,"onReceive: ACTION_FOUND.");
             if (action.equals(BluetoothDevice.ACTION_FOUND)){
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                mBTDevices.add(device);
-                Log.d(TAG,"onReceive: "+device.getName() +" "+device.getAddress());
-                mDeviceListAdapter = new DeviceListAdapter(context,R.layout.device_adapter_view,mBTDevices);
+
+                if (device.getName() != null)
+                {
+                    mBTDevices.add(device);
+                    Log.d(TAG,"onReceive: "+device.getName() +" "+device.getAddress());
+                }
+
+                mDeviceListAdapter = new DeviceListAdapter(context,R.layout.device_adapter_view, mBTDevices);
                 lvNewDevices.setAdapter(mDeviceListAdapter);
             }
         }
@@ -158,6 +182,7 @@ public class Connectivity_Activity extends AppCompatActivity implements AdapterV
             }
         }
     };
+
     @Override
     protected void onDestroy(){
         Log.d(TAG,"onDestroy: called");
@@ -234,6 +259,7 @@ public class Connectivity_Activity extends AppCompatActivity implements AdapterV
             @Override
             public void onClick(View view){
                 startconnection();
+
             }
         });
         btnSend.setOnClickListener(new View.OnClickListener(){
@@ -276,26 +302,47 @@ public class Connectivity_Activity extends AppCompatActivity implements AdapterV
     {
         try{
             Context context = getApplicationContext();
-            CharSequence text = "Paired with: "+ device.getName();
+            CharSequence text = "Pairing with: "+ device.getName();
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
-            Log.d(TAG,"StartBTConnection: Initializing RFCOM BT connection");
-            mBluetoothConnection.startClient(device,uuid);
 
-            // Redirect to main activity after successfully connecting
-            int timeout = 1000; // time out 1.5 seconds
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent home = new Intent(Connectivity_Activity.this, MainActivity.class);
-                    startActivity(home);
-                }
-            }, timeout);
-//            Intent home = new Intent(Connectivity_Activity.this, MainActivity.class);
-//            startActivity(home);
+            Log.d(TAG,"StartBTConnection: Initializing RFCOM BT connection");
+
+            mBluetoothConnection.startClient(device,uuid);
+            Thread.sleep(5000);
+            Log.d(TAG, "Swag");
+            if(mBluetoothConnection.getconnection() == 0)
+            {
+                Log.d(TAG,"Connection Failed");
+                CharSequence text2 = "Connection Failed with "+ device.getName();
+                int duration2 = Toast.LENGTH_SHORT;
+
+                Toast toast2 = Toast.makeText(context, text2, duration2);
+                toast2.show();
+            }
+            else
+            {
+                Log.d(TAG,"Connection Successful");
+                Context context3 = getApplicationContext();
+                CharSequence text3 = "Connected with "+ device.getName();
+                int duration3 = Toast.LENGTH_SHORT;
+
+                Toast toast3 = Toast.makeText(context, text3, duration3);
+                toast3.show();
+
+                // Redirect to main activity after successfully connecting
+                int timeout = 2000; // time out 2 seconds
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent home = new Intent(Connectivity_Activity.this, MainActivity.class);
+                        startActivity(home);
+                    }
+                }, timeout);
+            }
         }
         catch(NullPointerException e)
         {
@@ -305,8 +352,9 @@ public class Connectivity_Activity extends AppCompatActivity implements AdapterV
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
     }
     public void enableDisableBT()
     {
@@ -346,6 +394,9 @@ public class Connectivity_Activity extends AppCompatActivity implements AdapterV
     public void btnDiscover(View view)
     {
         Log.d(TAG, "btnDiscover: Looking for unpaired devices.");
+
+//        mDeviceListAdapter.clear();
+//        lvNewDevices.setAdapter(null);
 
         if(mBluetoothAdapter.isDiscovering())
         {
