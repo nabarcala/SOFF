@@ -108,11 +108,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("CuttingMech:", "onClick: opening Cutting Mechanism dialog");
 
                 // Start slicing the fruit
-                sliceFruit(v);
-
-                // Open Dialog
-                CuttingMechDialog dialog = new CuttingMechDialog();
-                dialog.show(getSupportFragmentManager(), "Cutting Mechanism Dialog");
+                if(sliceFruit(v)){
+                    // Open Dialog
+                    CuttingMechDialog dialog = new CuttingMechDialog();
+                    dialog.show(getSupportFragmentManager(), "Cutting Mechanism Dialog");
+                }
             }
         });
 
@@ -198,38 +198,35 @@ public class MainActivity extends AppCompatActivity {
         return b;
     }
     //add code here for slicing fruit
-    public void sliceFruit(View view)
-    {
-        String command = "cut1";
-        byte[] bytes = command.toString().getBytes(Charset.defaultCharset());
-        ((Startup)this.getApplicationContext()).b.write(bytes);
-
+    public boolean sliceFruit(View view) {
         Context context = getApplicationContext();
-        //CharSequence text = ((Startup)this.getApplicationContext()).b.getGetDeviceName();
-        CharSequence text = command;
+        CharSequence text;
         int duration = Toast.LENGTH_SHORT;
+        Toast toast;
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
-
-        //by default currentfruit == "Apple" for testing, change this to "" later
-        if (currentfruit.equals(""))
-        {
+        if (currentfruit.equals("")) {
             text = "Fruit has not been identified";
             toast = Toast.makeText(context, text, duration);
             toast.show();
-        }
-        else
-        {
-            try {
-                save_to_textfile(currentfruit);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            return false;
         }
 
+        // Continue to cutting fruit if fruit has been identified
+        String command = "cut1";
+        byte[] bytes = command.toString().getBytes(Charset.defaultCharset());
+        ((Startup) this.getApplicationContext()).b.write(bytes);
 
+        text = command;
+        toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        try {
+            save_to_textfile(currentfruit);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
     public void scan(View view)
     {
