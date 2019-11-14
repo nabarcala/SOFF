@@ -276,7 +276,7 @@ public class BluetoothConnectionService {
                         LocalBroadcastManager.getInstance(mContext).sendBroadcast(incomingRipenessIntent);
                         end = false;
                     }
-                    else if(incomingmessage.equals("Slice"))
+                    else if(incomingmessage.equals("Sliced"))
                     {
                         Log.d(TAG, "InputStream Message" + incomingmessage);
                         Intent incomingMessageIntent = new Intent("doneSlicing");
