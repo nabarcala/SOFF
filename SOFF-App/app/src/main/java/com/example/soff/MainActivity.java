@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     Button openDialog;
     TextView dialogText;
     Button reset;
+
+    CuttingMechDialog dialog;
 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 // Start slicing the fruit
                 if(sliceFruit(v)){
                     // Open Dialog
-                    CuttingMechDialog dialog = new CuttingMechDialog();
+                    dialog = new CuttingMechDialog();
                     dialog.show(getSupportFragmentManager(), "Cutting Mechanism Dialog");
                 }
             }
@@ -172,6 +174,9 @@ public class MainActivity extends AppCompatActivity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+
+            // Change dialog
+            dialog.doneSlicing();
         }
     };
     BroadcastReceiver cReceiver2 = new BroadcastReceiver() {
@@ -208,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
             text = "Fruit has not been identified";
             toast = Toast.makeText(context, text, duration);
             toast.show();
-            return false;
+//            return false;
         }
 
         // Continue to cutting fruit if fruit has been identified
@@ -227,6 +232,24 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return true;
+    }
+    public void reset(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text;
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast;
+
+        // Continue to cutting fruit if fruit has been identified
+        String command = "reset";
+        byte[] bytes = command.toString().getBytes(Charset.defaultCharset());
+        ((Startup) this.getApplicationContext()).b.write(bytes);
+
+        text = command;
+        toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        dialog.setReset();
     }
     public void scan(View view)
     {

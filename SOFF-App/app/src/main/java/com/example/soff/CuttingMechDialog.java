@@ -15,7 +15,7 @@ public class CuttingMechDialog extends DialogFragment {
 
     private static final String TAG = "CuttingMechDialog";
 
-    private TextView dialogText;
+    public TextView dialogText;
     private Button reset;
 
     @Nullable
@@ -26,14 +26,27 @@ public class CuttingMechDialog extends DialogFragment {
         dialogText = view.findViewById(R.id.cutDialog);
         reset = view.findViewById(R.id.btnReset);
 
-        reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: closing dialog");
-                getDialog().dismiss();
-            }
-        });
+//        reset.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(TAG, "onClick: closing dialog");
+//                getDialog().dismiss();
+//            }
+//        });
 
         return view;
+    }
+
+    public void doneSlicing() {
+        // Change dialog to ask user to pick up fruit
+        String text = "Done! Please pick up the slices then press the Reset button below.";
+        dialogText.setText(text);
+
+        // Set reset button to visible
+        reset.setVisibility(View.VISIBLE);
+    }
+
+    public void setReset() {
+        getDialog().dismiss();
     }
 }
