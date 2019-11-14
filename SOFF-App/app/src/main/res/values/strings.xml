@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SOFF</string>
     <string name="fruitinfo">Press Scan to Start</string>
+    <string name="bt_connection_instruct">"Press Discover to start discovering nearby bluetooth devices."</string>
     <string-array name="cuts">
         <item>Cut1</item>
         <item>Cut2</item>
