@@ -13,7 +13,7 @@ sensor = Adafruit_AS726x(i2c)
 sensor.conversion_mode = sensor.MODE_2
 
 #change coutn to increase number of data points
-count = 20
+count = 15
 
 #stores color data
 violet = []
@@ -55,12 +55,18 @@ time.sleep(.5)
 
 #while True:
 for i in range(count):
+    sensor.driver_led = True
     # Wait for data to be ready
     while not sensor.data_ready:
-        time.sleep(.1)
+        time.sleep(1)
         
     #plot plot the data
-    sensor.driver_led = True
+    v =sensor.violet
+    b = sensor.blue
+    g = sensor.green
+    y = sensor.yellow
+    o = sensor.orange
+    r = sensor.red
     #print("\n")
     #print("V: " + str(sensor.violet))
     #print("B: " + str(sensor.blue))
@@ -70,12 +76,12 @@ for i in range(count):
     #print("R: " + str(sensor.red))
     
     
-    violet.append(sensor.violet)
-    blue.append(sensor.blue)
-    green.append(sensor.green)
-    yellow.append(sensor.yellow)
-    orange.append(sensor.orange)
-    red.append(sensor.red)
+    violet.append(v)
+    blue.append(b)
+    green.append(g)
+    yellow.append(y)
+    orange.append(o)
+    red.append(r)
     
     total = violet[i]+blue[i]+green[i]+yellow[i]+orange[i]+red[i]
     
@@ -101,7 +107,7 @@ avg_blue = avg_blue/count
 avg_green = avg_green/count
 avg_yellow = avg_yellow/count
 avg_orange = avg_orange/count
-avg_red = avg_yellow/count
+avg_red = avg_red/count
 
 print("Violet")
 print("\n")
