@@ -137,7 +137,7 @@ print(avg_red)
 points = 0
 if avg_green < .30:
     points = points+1
-    if avg_green < .28:
+    if avg_green < .289:
         points = points+1
 if avg_yellow < .26:
     points = points+1
@@ -145,7 +145,7 @@ if avg_violet > .8:
     points = points+1
 if avg_orange > .18:
     points = points+1
-if avg_red > .06:
+if avg_red > .055:
     points= points+1
 file2 = open("Ripe.txt","w+")
 if points == 0 or points == 1:
