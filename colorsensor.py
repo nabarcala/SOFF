@@ -136,7 +136,7 @@ print(avg_red)
 #baseline for avocado testing
 points = 0
 if avg_green < .30:
-    points = points+1
+    points = points+2
     if avg_green < .289:
         points = points+1
 if avg_yellow < .26:
