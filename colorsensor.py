@@ -13,7 +13,7 @@ sensor = Adafruit_AS726x(i2c)
 sensor.conversion_mode = sensor.MODE_2
 
 #change coutn to increase number of data points
-count = 30
+count = 50
 
 #stores color data
 violet = []
