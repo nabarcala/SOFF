@@ -58,7 +58,7 @@ for i in range(count):
     sensor.driver_led = True
     # Wait for data to be ready
     while not sensor.data_ready:
-        time.sleep(1)
+        time.sleep(0)
         
     #plot plot the data
     v =sensor.violet
