@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SOFF</string>
     <string name="fruitinfo">Press Scan to Start</string>
+    <string name="bt_connection_instruct">"Press Discover to start discovering nearby bluetooth devices."</string>
     <string-array name="cuts">
         <item>Cut1</item>
         <item>Cut2</item>
@@ -30,10 +31,27 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!--  Parse  -->
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id">vjTkTkl1vnXVdSzOVucdtXhgNfMvc7l1xWDzcdiN</string>
+    <string name="back4app_client_key">po0KcANpdz1V3jZYiwEb9NrPYulZHBgvxGw9bDuw</string>
+
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+    <!--  Ripeness Checker  -->
+    <string name="instructions">Instructions: Hold fruit up to sensor when it blinks a green light. Hold it there until the light turns off.</string>
+    <string name="results">Results</string>
+    <string name="pick_fruit">Pick a fruit to check for ripeness:</string>
+    <string-array name="ripe_fruits">
+        <item>Avocado</item>
+        <item>Banana</item>
+    </string-array>
+
+    <!-- Cutting Mechanism -->
+    <string name="dialog">Please wait, currently slicing...</string>
 </resources>
