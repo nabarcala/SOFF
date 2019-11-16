@@ -139,9 +139,9 @@ if avg_green < .30:
     points = points+1
     if avg_green < .28:
         points = points+1
-if avg_yellow < .25:
+if avg_yellow < .26:
     points = points+1
-if avg_violet > .1:
+if avg_violet > .8:
     points = points+1
 if avg_orange > .18:
     points = points+1
