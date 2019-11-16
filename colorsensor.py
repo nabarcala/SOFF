@@ -13,7 +13,7 @@ sensor = Adafruit_AS726x(i2c)
 sensor.conversion_mode = sensor.MODE_2
 
 #change coutn to increase number of data points
-count = 15
+count = 50
 
 #stores color data
 violet = []
@@ -58,7 +58,7 @@ for i in range(count):
     sensor.driver_led = True
     # Wait for data to be ready
     while not sensor.data_ready:
-        time.sleep(1)
+        time.sleep(0)
         
     #plot plot the data
     v =sensor.violet
@@ -134,19 +134,25 @@ print("\n")
 print(avg_red)
 
 #baseline for avocado testing
+points = 0
 if avg_green < .30:
-    if avg_green < .25:
-        print("Average green less than 25%, probably ripe")
-        file2 = open("Ripe.txt","w+")
-        file2.write("Ripe, Ready to eat")
-        file2.close()
-    else:
-        print("Should probably wait a few more days")
-        file2 = open("Ripe.txt","w+")
-        file2.write("Not Ripe: Wait a few more days")
-        file2.close()
-else:
-    print("Average green greater than 30%, should probably wait a few days")
-    file2 = open("Ripe.txt","w+")
-    file2.write("Not Ripe, Still green")
-    file2.close()
+    points = points+2
+    if avg_green < .289:
+        points = points+1
+if avg_yellow < .26:
+    points = points+1
+if avg_violet > .08:
+    points = points+1
+if avg_orange > .18:
+    points = points+1
+if avg_red > .055:
+    points= points+1
+file2 = open("Ripe.txt","w+")
+if points == 0 or points == 1:
+    file2.write("Ripeness level 1: Still Green")
+if points <= 4 and points > 1:
+    file2.write("Ripeness level 2: Not ripe yet, wait a few more days")
+if points > 4:
+    file2.write("Ripeness level 3: Ripe, ready to eat")
+file2.close()
+print(points)

@@ -129,7 +129,7 @@ def btconnection():
             client_sock.send("Ripeness")
             time.sleep(5)
             client_sock.send(ripe)
-            client_sock.sendd("end")
+            client_sock.send("end")
 
         elif data.decode("utf-8") == "test":
             client_sock.send("Bluetooth Device is connected")
