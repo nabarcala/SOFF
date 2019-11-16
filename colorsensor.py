@@ -143,7 +143,7 @@ if avg_yellow < .25:
     points = points+1
 if avg_violet > .1:
     points = points+1
-if avg_orange = > .18:
+if avg_orange > .18:
     points = points+1
 if avg_red > .06:
     points= points+1
