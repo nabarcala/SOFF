@@ -134,19 +134,25 @@ print("\n")
 print(avg_red)
 
 #baseline for avocado testing
+points = 0
 if avg_green < .30:
-    if avg_green < .25:
-        print("Average green less than 25%, probably ripe")
-        file2 = open("Ripe.txt","w+")
-        file2.write("Ripe, Ready to eat")
-        file2.close()
-    else:
-        print("Should probably wait a few more days")
-        file2 = open("Ripe.txt","w+")
-        file2.write("Not Ripe: Wait a few more days")
-        file2.close()
-else:
-    print("Average green greater than 30%, should probably wait a few days")
-    file2 = open("Ripe.txt","w+")
-    file2.write("Not Ripe, Still green")
-    file2.close()
+    points = points+1
+    if avg_green < .28:
+        points = points+1
+if avg_yellow < .25:
+    points = points+1
+if avg_violet > .1:
+    points = points+1
+if avg_orange = > .18:
+    points = points+1
+if avg_red > .06:
+    points= points+1
+file2 = open("Ripe.txt","w+")
+if points == 0 or points == 1:
+    file2.write("Ripeness level 1: Still Green")
+if points < 4 and points < 1:
+    file.write("Ripeness level 2: Not ripe yet, wait a few more days")
+if points > 4:
+    file2.write("Ripeness level 3: Ripe, ready to eat")
+file2.close()
+print(points)
