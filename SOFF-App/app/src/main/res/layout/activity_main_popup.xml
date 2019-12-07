@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/cutDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:text="@string/dialog"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#000" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/loading"-->
+<!--            android:-->
+<!--            android:layout_width="83dp"-->
+<!--            android:layout_height="64dp"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_margin="10dp"-->
+<!--            />-->
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="40dp"
+            android:onClick="reset"
+            android:text="Reset"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

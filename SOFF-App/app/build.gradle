@@ -31,4 +31,13 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.google.android.material:material:1.0.0'
+    // Parse SDK for Android: latest version is 1.21.0
+    implementation "com.github.parse-community.Parse-SDK-Android:parse:1.21.0"
+
+}
+// Install Parse SDK
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
 }

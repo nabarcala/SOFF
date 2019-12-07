@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -20,8 +21,6 @@ import java.nio.charset.Charset;
 import java.util.UUID;
 
 public class BluetoothConnectionService {
-
-
     private static final String TAG = "BluetoothConnectionServ";
     private static final String appname = "SOFF";
     private static final UUID My_UUID_INSECURE =
@@ -41,9 +40,11 @@ public class BluetoothConnectionService {
     ProgressDialog mProgressDialog;
     private ConnectedThread mConnectedThread;
     private String DeviceName;
-
-
-
+    private int connected_var = 0;
+    public int getconnection()
+    {
+        return connected_var;
+    }
     //runs until a connection is accepted
     private class AcceptThread extends Thread {
         private final BluetoothServerSocket mmServerSocket;
@@ -83,6 +84,7 @@ public class BluetoothConnectionService {
             Log.d(TAG, "cancel: Cancelling AcceptThread");
             try {
                 mmServerSocket.close();
+                connected_var = 0;
             } catch (IOException e) {
                 Log.e(TAG, "cancel: Close of AcceptThread ServerSocket failed " + e.getMessage());
             }
@@ -113,6 +115,7 @@ public class BluetoothConnectionService {
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e(TAG, "ConnectedThread: could not create InsecureRFCommSocket " + e.getMessage());
+                CharSequence text = "Connection Failed: Connect connect to InsecureRFCommSocket";
             }
             mmSocket = tmp;
             //cancels discovery
@@ -121,7 +124,10 @@ public class BluetoothConnectionService {
             try {
                 mmSocket.connect();
                 Log.d(TAG, "run: ConnectThread connected");
-            } catch (IOException e) {
+                connected_var = 1;
+//                isConnected = Boolean.TRUE;
+            }
+            catch (IOException e) {
                 try {
                     mmSocket.close();
                     Log.d(TAG, "run: Closed Socket.");
@@ -130,15 +136,18 @@ public class BluetoothConnectionService {
                     Log.d(TAG, "mConnectThread: run: Unable to close connection in socket" + e1.getMessage());
                 }
                 Log.d(TAG, "run:ConnectedThread: could not connect to UUID: " + My_UUID_INSECURE);
+                connected_var = 0;
 
             }
             connected(mmSocket, mmdevice);
+
         }
 
         public void cancel() {
             try {
                 Log.d(TAG, "cancel: close client socket.");
                 mmSocket.close();
+                connected_var = 0;
             } catch (IOException e) {
                 Log.e(TAG, "cancel: close() of mmSocket in ConnectThread failed" + e.getMessage());
             }
@@ -215,21 +224,25 @@ public class BluetoothConnectionService {
                 try {
                     mConnectedThread.sleep(1000);
                     bytes = mmInStream.read(buffer);
-
+                    boolean end = false;
                     int offset = 11;
                     String incomingmessage = new String(buffer, 0, bytes);
                     Log.d(TAG, "InputStream123 " + incomingmessage);
-
-                    if (incomingmessage.length() < 100)
+                    if(incomingmessage.equals("Image"))
                     {
-                        Log.d(TAG, "InputStream " + incomingmessage);
-
-                        Intent incomingMessageIntent = new Intent("incomingMessage");
-                        incomingMessageIntent.putExtra("theMessage",incomingmessage);
-                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(incomingMessageIntent);
-                    }
-                    else
-                    {
+                        incomingmessage = "";
+                        while(!end)
+                        {
+                            int bytes1 = mmInStream.read(buffer);
+                            incomingmessage += new String(buffer,0,bytes1);
+                            if(incomingmessage.substring(incomingmessage.length()-3).equals("end"))
+                            {
+                                //end of transmission
+                                end = true;
+                            }
+                        }
+                        //removes 'end' from incoming message
+                        incomingmessage = incomingmessage.substring(0,incomingmessage.length()-3);
                         Log.d(TAG, "InputStream " + "incomingimage");
                         //int bytes2 = mmInStream.read(buffer);
                         //String incomingmessage2 = new String(buffer,0,bytes2);
@@ -238,9 +251,53 @@ public class BluetoothConnectionService {
                         Log.d(TAG, "InputStream image:");
                         Intent incomingImageIntent = new Intent("incomingImage");
                         incomingImageIntent.putExtra("theImage",incomingmessage);
-                       // incomingImageIntent.putExtra("theImage",bytes);
+                        // incomingImageIntent.putExtra("theImage",bytes);
                         LocalBroadcastManager.getInstance(mContext).sendBroadcast(incomingImageIntent);
+                        end = false;
                     }
+                    else if(incomingmessage.equals("Ripeness"))
+                    {
+                        incomingmessage = "";
+                        while(!end)
+                        {
+                            int bytes1 = mmInStream.read(buffer);
+                            incomingmessage += new String(buffer,0,bytes1);
+                            if(incomingmessage.substring(incomingmessage.length()-3).equals("end"))
+                            {
+                                //end of transmission
+                                end = true;
+                            }
+                        }
+                        //removes 'end' from message
+                        incomingmessage = incomingmessage.substring(0,incomingmessage.length()-3);
+                        Log.d(TAG, "InputStream Ripeness " + incomingmessage);
+                        Intent incomingRipenessIntent = new Intent("incomingRipeness");
+                        incomingRipenessIntent.putExtra("theRipeness",incomingmessage);
+                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(incomingRipenessIntent);
+                        end = false;
+                    }
+                    else if(incomingmessage.equals("Sliced"))
+                    {
+                        Log.d(TAG, "InputStream Message" + incomingmessage);
+                        Intent incomingMessageIntent = new Intent("doneSlicing");
+                        incomingMessageIntent.putExtra("sliceStatus",incomingmessage);
+                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(incomingMessageIntent);
+                    }
+                    else if(incomingmessage.equals("Reset"))
+                    {
+                        Log.d(TAG, "InputStream Message" + incomingmessage);
+                        Intent incomingMessageIntent = new Intent("Reseting");
+                        incomingMessageIntent.putExtra("resetStatus",incomingmessage);
+                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(incomingMessageIntent);
+                    }
+                    else
+                    {
+                        Log.d(TAG, "InputStream Message" + incomingmessage);
+                        Intent incomingMessageIntent = new Intent("incomingMessage");
+                        incomingMessageIntent.putExtra("theMessage",incomingmessage);
+                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(incomingMessageIntent);
+                    }
+
 
                 } catch (IOException e) {
                     Log.e(TAG,"write: Error reading from inputstream "+e.getMessage());
@@ -268,6 +325,7 @@ public class BluetoothConnectionService {
         public void cancel(){
             try {
                 mmSocket.close();
+                connected_var = 0;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -280,6 +338,7 @@ public class BluetoothConnectionService {
         //Start the thread to manage the connection and perfrom transmissions
         mConnectedThread = new ConnectedThread(mmSocket);
         mConnectedThread.start();
+
     }
 
     public void write(byte[] out)
@@ -291,6 +350,7 @@ public class BluetoothConnectionService {
         //perform the write
         try{
             mConnectedThread.write(out);
+            Log.d(TAG,"Write: out" + out );
         }
         catch(NullPointerException e)
         {
