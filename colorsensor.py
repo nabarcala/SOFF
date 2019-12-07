@@ -139,6 +139,8 @@ if avg_green < .30:
     points = points+2
     if avg_green < .289:
         points = points+1
+if avg_green > .33:
+    points = points-1
 if avg_yellow < .26:
     points = points+1
 if avg_violet > .08:
@@ -148,7 +150,7 @@ if avg_orange > .18:
 if avg_red > .055:
     points= points+1
 file2 = open("Ripe.txt","w+")
-if points == 0 or points == 1:
+if points == 0 or points == 1 or points == -1:
     file2.write("Ripeness level 1: Still Green")
 if points <= 4 and points > 1:
     file2.write("Ripeness level 2: Not ripe yet, wait a few more days")
