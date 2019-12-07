@@ -72,69 +72,71 @@ def btconnection():
     print("Accepted connection from ", client_info)
     client_sock.send("Connection Established")
 
-    #try:
-    while True:
-        data = client_sock.recv(1024)
-        print("received [%s]" % data.decode("utf-8"))
-        #if app sends "stop" == 0: break
-        if data.decode("utf-8") == "stop":
-            print("Stopping: Breaking conection.....")
-            break
+    try:
+        while True:
+            data = client_sock.recv(1024)
+            print("received [%s]" % data.decode("utf-8"))
+            #if app sends "stop" == 0: break
+            if data.decode("utf-8") == "stop":
+                print("Stopping: Breaking conection.....")
+                break
 
-        #if app sends "scan"
-        elif data.decode("utf-8") == "scan":
-            #gets the name of the fruit
-            print("Scanning fruit.....") 
-            result = scan()
-            image = getimage()
+            #if app sends "scan"
+            elif data.decode("utf-8") == "scan":
+                #gets the name of the fruit
+                print("Scanning fruit.....") 
+                result = scan()
+                image = getimage()
 
-            #sends the fruit Classification
-            print("Sending fruit result.....")
-            client_sock.send(result)
+                #sends the fruit Classification
+                print("Sending fruit result.....")
 
-            #sends the image
-            print("Sending image to App.....")
-            client_sock.send("Image")
-            time.sleep(5)
-            client_sock.send(image)
-            client_sock.send("end")
+                client_sock.send(result)
+                time.sleep(2)
+                #sends the image
+                print("Sending image to App.....")
 
-        # Test later
-        #client_sock.put("Fruit-Classification/Image-Classification/fruit_img.jpg")
-        #subprocess32.call(["ussp-push", "client_info[0]", "Fruit-Classification/Image-Classification/fruit_img.jpg", "fruit_img.jpg"])
+                client_sock.send("Image")
+                time.sleep(5)
+                client_sock.send(image)
+                client_sock.send("end")
 
-            print("Sent image to App")
+                print("Sent image to App")
 
-        #if app sends "cut1", cut downwards
-        elif data.decode("utf-8") == "cut1":
-            cut1()
-            # Send confirmation and tell user to remove fruit
-            client_sock.send("Sliced")
+            #if app sends "cut1"
+            elif data.decode("utf-8") == "cut1":
+                # cut downward
+                print("Cutting")
+                cut1()
+                # Set timer to only send command after its done slicing
+                time.sleep(5)
+                client_sock.send("Sliced")
+                print("...")
+                
+            elif data.decode("utf-8") == "reset":
+                # reset upward
+                reset_mechanism()
+                client_sock.send("Reset")
 
-        # if app send "reset", move upwards
-        elif data.decode("utf-8") == "reset":
-            reset_mechanism()
-            # tell user that the cutting mechanism is done moving
-            client_sock.send("Reset")
+            elif data.decode("utf-8") == "checkripe":
+                ripe = checkripe()
+                client_sock.send("Ripeness")
+                time.sleep(5)
+                client_sock.send(ripe)
+                client_sock.send("end")
 
-        elif data.decode("utf-8") == "checkripe":
-            ripe = checkripe()
-            client_sock.send("Ripeness")
-            time.sleep(5)
-            client_sock.send(ripe)
-            client_sock.send("end")
+            elif data.decode("utf-8") == "checkbanana":
+                ripe = checkbanana()
+                client_sock.send("Ripeness")
+                time.sleep(5)
+                client_sock.send(ripe)
+                client_sock.send("end")
 
-        elif data.decode("utf-8") == "checkbanana":
-            ripe = checkbanana()
-            client_sock.send("Ripeness")
-            time.sleep(5)
-            client_sock.send(ripe)
-            client_sock.send("end")
+            elif data.decode("utf-8") == "test":
+                client_sock.send("Bluetooth Device is connected")
 
-        elif data.decode("utf-8") == "test":
-            client_sock.send("Bluetooth Device is connected")
-    #except IOError:
-        #pass
+    except IOError:
+        pass
 
     print("Disconnected")
 
@@ -142,9 +144,11 @@ def btconnection():
     server_sock.close()
     print("All Closed")
     
-    # restart bluetooth connection if disconnected
+    # keep going
+    btconnection()
+
+
+if __name__=='__main__':       
     btconnection()
     
-if __name__=='__main__':
-    btconnection()
 # End of script
