@@ -272,7 +272,7 @@ print(avg_red)
 
 file2 = open("Ripe.txt","w+")
 
-if avg_green >= .30:
+if avg_green >= .29:
     file2.write("Banana is Still Green")
 
 else:
