@@ -24,7 +24,11 @@ def reset_mechanism():
 def main():
     args = parser.parse_args()
     global ser
-    ser = serial.Serial('/dev/ttyUSB0', 9600)
+    
+    try:
+        ser = serial.Serial('/dev/ttyUSB0', 9600)
+    except:
+        print("Please check the port: error with USB connection.")
     
     # Move downward
     if args.dir == 'D':
